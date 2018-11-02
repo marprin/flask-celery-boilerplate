@@ -6,60 +6,48 @@ update the value using environtment variable
 import os
 
 
-class Config:
-    TOKEN_EXPIRY = int(os.getenv('TOKEN_EXPIRY'))
-    SECRET_KEY = os.getenv('SECRET_KEY')
+TOKEN_EXPIRY = int(os.getenv('TOKEN_EXPIRY'))
+SECRET_KEY = os.getenv('SECRET_KEY')
+REDIS_HOST = os.getenv('REDIS_HOST')
 
 
-    LOGGING_CONFIG = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "formatters": {
-            "default": {
-                "format": "%(asctime)s - %(process)s - %(name)s - %(levelname)s - %(message)s"
-            },
-            "json_formatter": {
-                "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
-                "format": "%(asctime)s %(process)d %(threadName)s "
-                        "%(name)s %(levelname)s %(pathname)s %(lineno)s %(message)s",
-                "datefmt": "%Y-%m-%dT%H:%M:%S%z"
-            }
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s - %(process)s - %(name)s - %(levelname)s - %(message)s"
         },
-        "handlers": {
-            "wsgi": {
-                "class": "logging.StreamHandler",
-                "stream": "ext://flask.logging.wsgi_errors_stream",
-                'formatter': 'default'
-            },
-            "file_handler": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "level": "DEBUG",
-                "formatter": "default",
-                "filename": "logs/debug.log",
-                "maxBytes": 10485760,
-                "backupCount": 5,
-                "encoding": "utf8"
-            },
-            "logentries": {
-                "class": "logentries.LogentriesHandler",
-                "level": "ERROR",
-                "formatter": "json_formatter",
-                "token": "AAAA"
-
-            }
-        },
-        "loggers": {
-            "flask.app": {
-                "handlers": ['file_handler', 'wsgi']
-            },
-            "logentries": {
-                "handlers": ['logentries']
-            }
-        },
-        "root": {
-            "level": "INFO",
-            "handlers": ['wsgi']
+        "json_formatter": {
+            "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
+            "format": "%(asctime)s %(process)d %(threadName)s "
+                    "%(name)s %(levelname)s %(pathname)s %(lineno)s %(message)s",
+            "datefmt": "%Y-%m-%dT%H:%M:%S%z"
         }
+    },
+    "handlers": {
+        "wsgi": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://flask.logging.wsgi_errors_stream",
+            'formatter': 'default'
+        },
+        "file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "default",
+            "filename": "logs/debug.log",
+            "maxBytes": 10485760,
+            "backupCount": 5,
+            "encoding": "utf8"
+        }
+    },
+    "loggers": {
+        "flask.app": {
+            "handlers": ['file_handler', 'wsgi']
+        }
+    },
+    "root": {
+        "level": "INFO",
+        "handlers": ['wsgi']
     }
-
-settings = Config
+}
