@@ -1,0 +1,3 @@
+#!/bin/bash
+
+FLASK_APP=apps FLASK_ENV=development flask shell
