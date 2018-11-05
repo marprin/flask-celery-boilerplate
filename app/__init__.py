@@ -1,6 +1,6 @@
 from flask import Flask
 from werkzeug.contrib.cache import RedisCache
-from apps.auth.views import auth
+from app.auth.views import auth
 import settings
 
 
