@@ -1,0 +1,7 @@
+-r base.txt
+
+# Code coverage measurement for Python
+coverage==4.5.1
+
+# Pytest: simple powerful testing with Python
+pytest==3.10.0
