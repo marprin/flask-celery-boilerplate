@@ -16,3 +16,4 @@ build/
 .vscode
 .env
 celerybeat-schedule.db
+celerybeat-schedule
