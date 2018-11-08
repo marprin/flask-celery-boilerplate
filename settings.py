@@ -4,18 +4,20 @@ update the value using environtment variable
 """
 
 import os
-from dotenv import load_dotenv
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-dotenv_file = os.path.join(BASE_DIR, '.env')
-load_dotenv(dotenv_file)
+
+APP_KEY = os.getenv('APP_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 TOKEN_EXPIRY = int(os.getenv('TOKEN_EXPIRY'))
-SECRET_KEY = os.getenv('SECRET_KEY')
 REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
 
-CELERY_BROKER_URL = 'redis://{}/0'.format(REDIS_HOST)
-CELERY_RESULT_BACKEND = 'redis://{}/1'.format(REDIS_HOST)
+TIMEZONE = 'UTC'
+
+CELERY_BROKER_URL = 'redis://{}:{}/0'.format(REDIS_HOST, REDIS_PORT)
+CELERY_RESULT_BACKEND = 'redis://{}:{}/1'.format(REDIS_HOST, REDIS_PORT)
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
