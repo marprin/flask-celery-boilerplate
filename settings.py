@@ -24,6 +24,18 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TIMEZONE = 'UTC'
 CELERY_ENABLE_UTC = True
 
+from celery.schedules import crontab
+CELERYBEAT_SCHEDULE = {
+    'add': {
+        'task': 'tasks.add',
+        'schedule': crontab(hour='*/1', minute=28)
+    },
+    'add-2': {
+        'task': 'scheduled_tasks.add_2',
+        'schedule': crontab(hour='*/1', minute=28)
+    }
+}
+
 
 LOGGING_CONFIG = {
     "version": 1,
@@ -45,6 +57,12 @@ LOGGING_CONFIG = {
             "stream": "ext://flask.logging.wsgi_errors_stream",
             'formatter': 'default'
         },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'ERROR',
+            'formatter': 'json_formatter',
+            'stream': 'ext://sys.stdout'
+        },
         "file_handler": {
             "class": "logging.handlers.RotatingFileHandler",
             "level": "DEBUG",
@@ -57,11 +75,14 @@ LOGGING_CONFIG = {
     },
     "loggers": {
         "flask.app": {
-            "handlers": ['file_handler', 'wsgi']
+            'level': 'DEBUG',
+            'propagate': False,
+            "handlers": ['file_handler', 'wsgi', 'console']
         }
     },
     "root": {
-        "level": "INFO",
-        "handlers": ['wsgi']
+        "level": "ERROR",
+        "handlers": ['wsgi', 'console'],
+        'propagate': False,
     }
 }

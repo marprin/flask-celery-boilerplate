@@ -29,5 +29,3 @@ class FlaskCelery(Celery):
     def init_app(self, app):
         self.app = app
         self.config_from_object(app.config)
-
-celery = FlaskCelery('tasks', broker=settings.CELERY_BROKER_URL)
