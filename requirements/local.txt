@@ -5,3 +5,6 @@ coverage==4.5.1
 
 # Pytest: simple powerful testing with Python
 pytest==3.10.0
+
+# Pytest plugin for measuring coverage.
+pytest-cov==2.6.0
