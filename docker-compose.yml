@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./compose/app/Dockerfile
+    image: flask-tutorial:master
+    ports:
+      - "9300:9300"
+    env_file: .env
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/app/Dockerfile
+    image: flask-tutorial:master
+    ports:
+      - "9400:9400"
+    env_file: .env
+    command: celery flower -A registered_tasks.celery -l info --port=9400
+
+  celerybeat:
+    build:
+      context: .
+      dockerfile: ./compose/app/Dockerfile
+    image: flask-tutorial:master
+    env_file: .env
+    command: celery beat -A registered_tasks.celery -l info
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./compose/app/Dockerfile
+    image: flask-tutorial:master
+    env_file: .env
+    command: celery worker -A registered_tasks.celery -l info
+    depends_on:
+      - celerybeat
