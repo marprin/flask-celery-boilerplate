@@ -2,7 +2,7 @@
 Flask==1.0.2
 
 # Distributed Task Queue
-celery==4.3.0
+celery==5.2.2
 
 # Python client for Redis key-value store
 redis==3.2.1
