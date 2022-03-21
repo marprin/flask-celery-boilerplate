@@ -5,4 +5,4 @@
 gunicorn==19.9.0
 
 # Waitress WSGI Server
-waitress==1.4.3
+waitress==2.1.1
