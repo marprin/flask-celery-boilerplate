@@ -37,3 +37,10 @@ services:
     command: celery worker -A registered_tasks.celery -l info
     depends_on:
       - celerybeat
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --loglevel info
